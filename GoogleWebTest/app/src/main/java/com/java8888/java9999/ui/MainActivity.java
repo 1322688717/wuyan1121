@@ -48,6 +48,7 @@ import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultDownloadImpl;
 import com.just.agentweb.IAgentWebSettings;
 import com.just.agentweb.WebListenerManager;
+import com.tencent.mmkv.MMKV;
 
 import java.io.IOException;
 
@@ -83,6 +84,7 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
     private WebView mWebView;
     private WebProgress mProgress;
     private ValueCallback<Uri[]> uploadFiles;
+    boolean bValue;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -358,16 +360,35 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
      * 初始化悬浮按钮
      */
     private void initFloating() {
+        MMKV kv = MMKV.defaultMMKV();
+        kv.encode("bool", true);
+        bValue = kv.decodeBool("bool");
+
         Boolean showFloatButton = Boolean.valueOf(getResources().getString(R.string.showFloatButton));
         if (showFloatButton) {
             floatingButton.setVisibility(View.VISIBLE);
             floatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     UrlBean urlBean = AssetsUtils.getUrlBeanFromAssets(MainActivity.this);
                     if (urlBean != null) {
                         if (!TextUtils.isEmpty(urlBean.getFloatUrl())) {
-                            skipLocalBrowser(urlBean.getFloatUrl());
+                            //skipLocalBrowser(urlBean.getFloatUrl());
+
+                            if (bValue){
+                                kv.encode("bool", false);
+                                bValue = kv.decodeBool("bool");
+                                loadUrl(urlBean.getFloatUrl());
+                                floatingButton.setBackgroundResource(R.mipmap.back);
+                            }else {
+                                kv.encode("bool", true);
+                                bValue = kv.decodeBool("bool");
+                                initWebView();
+                                initData();
+                                floatingButton.setBackgroundResource(R.mipmap.icon_float);
+                            }
+
                         }
                     } else {
                         Toast.makeText(MainActivity.this, "配置异常，请检查", Toast.LENGTH_SHORT).show();
