@@ -1,5 +1,6 @@
 package com.java8888.java9999.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -83,8 +84,10 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
     private View customView;
     private WebView mWebView;
     private WebProgress mProgress;
+    private ValueCallback<Uri> uploadFile;
     private ValueCallback<Uri[]> uploadFiles;
-    boolean bValue;
+    private boolean bValue = true;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,6 +150,7 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
     /**
      * 初始化webView
      */
+    @SuppressLint("SetJavaScriptEnabled")
     public void initWebView() {
         try {
             WebSettings settings = mWebView.getSettings();
@@ -181,9 +185,7 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
             settings.setBuiltInZoomControls(true);
 
             settings.setPluginState(WebSettings.PluginState.ON);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-            }
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
             // 设置WebView加载页面文本内容的编码，默认“UTF-8”。
             settings.setDefaultTextEncodingName("UTF-8");
             mWebView.setWebViewClient(new MyWebViewClient());
@@ -360,9 +362,7 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
      * 初始化悬浮按钮
      */
     private void initFloating() {
-        MMKV kv = MMKV.defaultMMKV();
-        kv.encode("bool", true);
-        bValue = kv.decodeBool("bool");
+        final MMKV kv = MMKV.defaultMMKV();
 
         Boolean showFloatButton = Boolean.valueOf(getResources().getString(R.string.showFloatButton));
         if (showFloatButton) {
@@ -370,25 +370,22 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
             floatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     UrlBean urlBean = AssetsUtils.getUrlBeanFromAssets(MainActivity.this);
                     if (urlBean != null) {
                         if (!TextUtils.isEmpty(urlBean.getFloatUrl())) {
                             //skipLocalBrowser(urlBean.getFloatUrl());
-
                             if (bValue){
                                 kv.encode("bool", false);
                                 bValue = kv.decodeBool("bool");
+                                //skipLocalBrowser(mFloatUrl);
                                 loadUrl(urlBean.getFloatUrl());
                                 floatingButton.setBackgroundResource(R.mipmap.back);
                             }else {
                                 kv.encode("bool", true);
                                 bValue = kv.decodeBool("bool");
-                                initWebView();
                                 initData();
                                 floatingButton.setBackgroundResource(R.mipmap.icon_float);
                             }
-
                         }
                     } else {
                         Toast.makeText(MainActivity.this, "配置异常，请检查", Toast.LENGTH_SHORT).show();
@@ -657,6 +654,34 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
                 });
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int i, int i2, Intent intent) {
+        super.onActivityResult(i, i2, intent);
+        if (i2 == -1) {
+            if (i == 0) {
+                if (uploadFile != null) {
+                    uploadFile.onReceiveValue((intent == null || i2 != -1) ? null : intent.getData());
+                    uploadFile = null;
+                }
+                if (uploadFiles != null) {
+                    uploadFiles.onReceiveValue(new Uri[]{(intent == null || i2 != -1) ? null : intent.getData()});
+                    uploadFiles = null;
+                }
+            }
+        } else if (i2 == 0) {
+            ValueCallback<Uri> valueCallback = this.uploadFile;
+            if (valueCallback != null) {
+                valueCallback.onReceiveValue(null);
+                uploadFile = null;
+            }
+            ValueCallback<Uri[]> valueCallback2 = this.uploadFiles;
+            if (valueCallback2 != null) {
+                valueCallback2.onReceiveValue(null);
+                uploadFiles = null;
+            }
+        }
     }
 }
 

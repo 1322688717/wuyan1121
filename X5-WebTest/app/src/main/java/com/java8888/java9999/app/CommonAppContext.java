@@ -3,6 +3,7 @@ package com.java8888.java9999.app;
 import android.app.Application;
 import android.content.Context;
 
+import com.tencent.mmkv.MMKV;
 import com.tencent.smtt.sdk.QbSdk;
 
 public class CommonAppContext extends Application {
@@ -27,6 +28,7 @@ public class CommonAppContext extends Application {
         };
         //x5内核初始化接口
         QbSdk.initX5Environment(getApplicationContext(), cb);
+        MMKV.initialize(this);
     }
     public static Context getAppContext() {
         return sInstance;

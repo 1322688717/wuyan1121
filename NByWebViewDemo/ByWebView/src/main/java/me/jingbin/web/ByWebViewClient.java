@@ -106,7 +106,7 @@ public class ByWebViewClient extends WebViewClient {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return;
         }
-        mByWebView.showErrorView(failingUrl);
+      //  mByWebView.showErrorView(failingUrl);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class ByWebViewClient extends WebViewClient {
         super.onReceivedError(view, request, error);
         if (request.isForMainFrame()) {
             // 是否是为 main frame创建
-            mByWebView.showErrorView(request.getUrl().toString());
+         //   mByWebView.showErrorView(request.getUrl().toString());
         }
     }
 

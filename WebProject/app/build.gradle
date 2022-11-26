@@ -69,4 +69,6 @@ dependencies {
     //进度条
     implementation 'com.github.youlookwhat:WebProgress:1.2.0'
 
+    implementation 'com.tencent:mmkv:1.2.14'
+
 }

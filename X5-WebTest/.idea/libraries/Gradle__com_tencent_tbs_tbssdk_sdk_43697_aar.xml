@@ -25,6 +25,10 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7a6765ad7c327c18e63bbac366cb3c24/jetified-sdk-43697/res" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7a6765ad7c327c18e63bbac366cb3c24/jetified-sdk-43697/jars/libs/tbs_sdk_thirdapp_v4.3.0.1148_43697_sharewithdownloadwithfile_withoutGame_obfs_20190805_175505.jar!/" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7a6765ad7c327c18e63bbac366cb3c24/jetified-sdk-43697/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ec4b94e80dce92231c978c32e169598c/jetified-sdk-43697/jars/libs/tbs_sdk_thirdapp_v4.3.0.1148_43697_sharewithdownloadwithfile_withoutGame_obfs_20190805_175505.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ec4b94e80dce92231c978c32e169598c/jetified-sdk-43697/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ec4b94e80dce92231c978c32e169598c/jetified-sdk-43697/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ec4b94e80dce92231c978c32e169598c/jetified-sdk-43697/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../../../developtools/gradle/caches/modules-2/files-2.1/com.tencent.tbs.tbssdk/sdk/43697/5d0afcd002db27bae57583a31e55c683d2f049f2/sdk-43697-javadoc.jar!/" />

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.Tpp8888.Tpp9999"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 15
         versionName "3.3.1"
@@ -52,4 +52,8 @@ dependencies {
     implementation project(':ByWebView')
 //    implementation 'com.github.youlookwhat:ByWebView:1.2.0'
     implementation 'com.squareup.okhttp3:okhttp:3.12.13'
+
+
+    implementation 'com.tencent:mmkv:1.2.14'
+
 }

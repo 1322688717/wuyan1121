@@ -367,6 +367,7 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == MyWebChromeClient.FILECHOOSER_RESULTCODE) {
             mWebChromeClient.mUploadMessage(intent, resultCode);
         } else if (requestCode == MyWebChromeClient.FILECHOOSER_RESULTCODE_FOR_ANDROID_5) {

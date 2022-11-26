@@ -10,8 +10,8 @@ public class CommonAppContext extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        MMKV.initialize(this);
         sInstance = this;
+        String rootDir = MMKV.initialize(this);
     }
     public static Context getAppContext() {
         return sInstance;

@@ -8,6 +8,7 @@ import android.webkit.WebView;
 
 import androidx.multidex.MultiDex;
 
+import com.tencent.mmkv.MMKV;
 import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.sdk.QbSdk;
 
@@ -27,6 +28,7 @@ public class App extends Application {
         super.onCreate();
         app = this;
         initX5();
+        String rootDir = MMKV.initialize(this);
     }
 
     public static App getInstance() {

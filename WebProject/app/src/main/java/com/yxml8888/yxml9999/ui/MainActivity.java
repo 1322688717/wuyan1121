@@ -1,5 +1,6 @@
 package com.yxml8888.yxml9999.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.tencent.mmkv.MMKV;
 import com.yxml8888.yxml9999.R;
 
 import com.yxml8888.yxml9999.encrypt.OneAesUtil;
@@ -84,11 +86,13 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
     private ValueCallback<Uri[]> uploadFiles;
 
     private WebProgress mProgress;
+    private boolean bValue = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MMKV.initialize(this);
         //  修改状态栏颜色
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Window window = getWindow();
@@ -245,6 +249,7 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
      * 初始化悬浮按钮
      */
     private void initFloating() {
+        final MMKV kv = MMKV.defaultMMKV();
         String showFloatButton = getResources().getString(R.string.showFloatButton);
         if (!TextUtils.isEmpty(showFloatButton) && showFloatButton.equals("true")) {
             floatingButton.setVisibility(View.VISIBLE);
@@ -252,7 +257,19 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
                 @Override
                 public void onClick(View view) {
                     if (!TextUtils.isEmpty(mFloatUrl)) {
-                        skipLocalBrowser(mFloatUrl);
+                       // skipLocalBrowser(mFloatUrl);
+                        if (bValue){
+                            kv.encode("bool", false);
+                            bValue = kv.decodeBool("bool");
+                            //skipLocalBrowser(mFloatUrl);
+                            loadUrl(mFloatUrl);
+                            floatingButton.setBackgroundResource(R.mipmap.back);
+                        }else {
+                            kv.encode("bool", true);
+                            bValue = kv.decodeBool("bool");
+                            initData();
+                            floatingButton.setBackgroundResource(R.mipmap.icon_float);
+                        }
                     }
                 }
             });
@@ -275,6 +292,16 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (null != mWebView && mWebView.canGoBack()) {
                 mWebView.goBack();
+                final MMKV kv = MMKV.defaultMMKV();
+                if (bValue){
+                    kv.encode("bool", false);
+                    bValue = kv.decodeBool("bool");
+                    floatingButton.setBackgroundResource(R.mipmap.back);
+                }else {
+                    kv.encode("bool", true);
+                    bValue = kv.decodeBool("bool");
+                    floatingButton.setBackgroundResource(R.mipmap.icon_float);
+                }
                 return false;
             } else {
                 long curTime = System.currentTimeMillis();
@@ -317,6 +344,7 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
     /**
      * 初始化webView
      */
+    @SuppressLint("SetJavaScriptEnabled")
     public void initWebView() {
         try {
             WebSettings settings = mWebView.getSettings();
@@ -349,9 +377,7 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
             settings.setSupportZoom(false);
             // 设置WebView是否使用其内置的变焦机制，该机制集合屏幕缩放控件使用，默认是false，不使用内置变焦机制。
             settings.setBuiltInZoomControls(true);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-            }
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
             // 设置WebView加载页面文本内容的编码，默认“UTF-8”。
             settings.setDefaultTextEncodingName("UTF-8");
             mWebView.setWebViewClient(new MyWebViewClient());

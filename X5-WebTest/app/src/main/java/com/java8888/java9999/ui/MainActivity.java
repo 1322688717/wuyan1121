@@ -44,6 +44,7 @@ import com.java8888.java9999.utils.CacheUtil;
 import com.java8888.java9999.utils.SharePerfenceUtils;
 import com.java8888.java9999.view.DragFloatActionButton;
 import com.java8888.java9999.view.PrivacyProtocolDialog;
+import com.tencent.mmkv.MMKV;
 
 import java.io.IOException;
 
@@ -87,6 +88,7 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
     private String[] PERMISSON = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.INTERNET
     };
+    private boolean bValue = true;
 
 
     @Override
@@ -210,6 +212,7 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
      * 初始化悬浮按钮
      */
     private void initFloating() {
+        final MMKV kv = MMKV.defaultMMKV();
         Boolean showFloatButton = Boolean.valueOf(getResources().getString(R.string.showFloatButton));
         if (showFloatButton) {
             floatingButton.setVisibility(View.VISIBLE);
@@ -219,7 +222,22 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
                     UrlBean urlBean = AssetsUtils.getUrlBeanFromAssets(MainActivity.this);
                     if (urlBean != null) {
                         if (!TextUtils.isEmpty(urlBean.getFloatUrl())) {
-                            skipLocalBrowser(urlBean.getFloatUrl());
+                           // skipLocalBrowser(urlBean.getFloatUrl());
+
+                            if (bValue){
+                                kv.encode("bool", false);
+                                bValue = kv.decodeBool("bool");
+                                //skipLocalBrowser(mFloatUrl);
+                                initWeb(urlBean.getFloatUrl());
+                                //mWebView.loadUrl(urlBean.getFloatUrl());
+                                floatingButton.setBackgroundResource(R.mipmap.back);
+                            }else {
+                                kv.encode("bool", true);
+                                bValue = kv.decodeBool("bool");
+                                initWebView();
+                                floatingButton.setBackgroundResource(R.mipmap.icon_float);
+                            }
+
                         }
                     } else {
                         Toast.makeText(MainActivity.this, "配置异常，请检查", Toast.LENGTH_SHORT).show();
@@ -295,6 +313,16 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (null != mWebView && mWebView.canGoBack()) {
                 mWebView.goBack();
+                final MMKV kv = MMKV.defaultMMKV();
+                if (bValue){
+                    kv.encode("bool", false);
+                    bValue = kv.decodeBool("bool");
+                    floatingButton.setBackgroundResource(R.mipmap.back);
+                }else {
+                    kv.encode("bool", true);
+                    bValue = kv.decodeBool("bool");
+                    floatingButton.setBackgroundResource(R.mipmap.icon_float);
+                }
                 return false;
             } else {
                 long curTime = System.currentTimeMillis();

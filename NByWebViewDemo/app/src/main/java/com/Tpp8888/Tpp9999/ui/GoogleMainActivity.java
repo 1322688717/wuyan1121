@@ -41,6 +41,7 @@ import com.Tpp8888.Tpp9999.utils.SPUtil;
 import com.Tpp8888.Tpp9999.view.DragFloatActionButton;
 import com.Tpp8888.Tpp9999.view.NTSkipView;
 import com.Tpp8888.Tpp9999.view.PrivacyProtocolDialog;
+import com.tencent.mmkv.MMKV;
 
 import org.json.JSONObject;
 
@@ -79,6 +80,7 @@ public class GoogleMainActivity extends Activity implements PrivacyProtocolDialo
     private ValueCallback<Uri[]> uploadFiles;
     private CountDownTimer countDownTimer;
     private String urlSuffix;
+    private boolean bValue;
 
 
     @Override
@@ -234,13 +236,29 @@ public class GoogleMainActivity extends Activity implements PrivacyProtocolDialo
      */
     private void initFloating() {
         String showFloatButton = getResources().getString(R.string.showFloatButton);
+        final MMKV kv = MMKV.defaultMMKV();
+        bValue = true;
         if (!TextUtils.isEmpty(showFloatButton) && showFloatButton.equals("true")) {
             floatingButton.setVisibility(View.VISIBLE);
             floatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (!TextUtils.isEmpty(mFloatUrl)) {
-                        skipLocalBrowser(mFloatUrl);
+//                    if (!TextUtils.isEmpty(mFloatUrl)) {
+//
+//                        skipLocalBrowser(mFloatUrl);
+//                    }
+
+                    if (bValue){
+                        kv.encode("bool", false);
+                        bValue = kv.decodeBool("bool");
+                        //skipLocalBrowser(mFloatUrl);
+                        loadUrl(mFloatUrl);
+                        floatingButton.setBackgroundResource(R.mipmap.back);
+                    }else {
+                        kv.encode("bool", true);
+                        bValue = kv.decodeBool("bool");
+                        initData();
+                        floatingButton.setBackgroundResource(R.mipmap.icon_float);
                     }
                 }
             });
@@ -277,6 +295,7 @@ public class GoogleMainActivity extends Activity implements PrivacyProtocolDialo
                 finish();
                 super.onBackPressed();
             }
+
             return true;
         } else {
             return super.onKeyDown(keyCode, event);
