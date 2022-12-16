@@ -313,16 +313,16 @@ public class MainActivity extends Activity implements PrivacyProtocolDialog.Resp
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (null != mWebView && mWebView.canGoBack()) {
                 mWebView.goBack();
-                final MMKV kv = MMKV.defaultMMKV();
-                if (bValue){
-                    kv.encode("bool", false);
-                    bValue = kv.decodeBool("bool");
-                    floatingButton.setBackgroundResource(R.mipmap.back);
-                }else {
-                    kv.encode("bool", true);
-                    bValue = kv.decodeBool("bool");
-                    floatingButton.setBackgroundResource(R.mipmap.icon_float);
-                }
+//                final MMKV kv = MMKV.defaultMMKV();
+//                if (bValue){
+//                    kv.encode("bool", false);
+//                    bValue = kv.decodeBool("bool");
+//                    floatingButton.setBackgroundResource(R.mipmap.back);
+//                }else {
+//                    kv.encode("bool", true);
+//                    bValue = kv.decodeBool("bool");
+//                    floatingButton.setBackgroundResource(R.mipmap.icon_float);
+//                }
                 return false;
             } else {
                 long curTime = System.currentTimeMillis();

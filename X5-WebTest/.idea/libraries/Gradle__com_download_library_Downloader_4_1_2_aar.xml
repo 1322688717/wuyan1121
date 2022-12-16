@@ -8,6 +8,7 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b4c5d465fec2e4000972d880de39ee74/jetified-Downloader-4.1.2/annotations.zip!/" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c2bef784f8d78921125587fc3142fe88/jetified-Downloader-4.1.2/annotations.zip!/" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c225cb90d7c9545df83c880061dbf6f6/jetified-Downloader-4.1.2/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a6446d0f0bd52859c67790c51718f389/jetified-Downloader-4.1.2/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../../../developtools/gradle/caches/transforms-2/files-2.1/4d9f42ea7f1e0bcfdb2dc8f8e41e5b97/jetified-Downloader-4.1.2/res" />
@@ -31,6 +32,9 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c225cb90d7c9545df83c880061dbf6f6/jetified-Downloader-4.1.2/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c225cb90d7c9545df83c880061dbf6f6/jetified-Downloader-4.1.2/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c225cb90d7c9545df83c880061dbf6f6/jetified-Downloader-4.1.2/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a6446d0f0bd52859c67790c51718f389/jetified-Downloader-4.1.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a6446d0f0bd52859c67790c51718f389/jetified-Downloader-4.1.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a6446d0f0bd52859c67790c51718f389/jetified-Downloader-4.1.2/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../../../developtools/gradle/caches/modules-2/files-2.1/com.download.library/Downloader/4.1.2/d507eb5a1811d048e679e4eda9b20952257ee93d/Downloader-4.1.2-javadoc.jar!/" />
