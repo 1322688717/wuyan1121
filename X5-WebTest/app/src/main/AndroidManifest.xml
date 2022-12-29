@@ -13,8 +13,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
-    <!--  AppThemeNoBackground 表示没有背景图（也就是启动图启动）  -->
-    <!--  AppThemeHasBackground 表示有背景图（也就是没有启动图启动）  -->
+
     <application
         android:name=".app.CommonAppContext"
         android:allowBackup="true"
